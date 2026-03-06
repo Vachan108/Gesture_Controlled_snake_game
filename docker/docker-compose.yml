@@ -1,0 +1,31 @@
+services:
+
+  # ── FastAPI Gesture Backend ──────────────────────────────────
+  backend:
+    build:
+      context: ..                  # project root (so COPY backend/ works)
+      dockerfile: docker/Dockerfile
+    container_name: gesture_backend
+    ports:
+      - "8000:8000"                # host:container
+    restart: unless-stopped
+    environment:
+      - PYTHONUNBUFFERED=1         # see logs in real time
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+  # ── Frontend Static Server ───────────────────────────────────
+  frontend:
+    image: nginx:alpine            # lightweight static file server
+    container_name: gesture_frontend
+    ports:
+      - "5500:80"                  # serve on localhost:5500
+    volumes:
+      - ../frontend:/usr/share/nginx/html:ro   # mount frontend folder
+    restart: unless-stopped
+    depends_on:
+      - backend

@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# VS Code
+.vscode/
+
+# Git
+.git/
+.gitignore
+
+# Local game files (not needed in backend container)
+gesture_engine.py
+snake_game.py
+main.py
+requirements.txt
+
+# Logs
+*.log
